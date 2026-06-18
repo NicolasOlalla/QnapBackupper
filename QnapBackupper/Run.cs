@@ -15,7 +15,7 @@ namespace QnapBackupper
             string _sucursalesString = ConfigurationManager.AppSettings["SUCURSALES"];
             string[] _sucursalesArray = _sucursalesString.Split(',');
 
-            if (_sucursalesArray.Length > 0) 
+            if (_sucursalesArray.Length > 0 && _sucursalesArray[0].Length > 0) 
             {
                 Logger log = LogManager.GetCurrentClassLogger();
                 log.Info("Se iniciar proceso de copiado de archivos de respaldo con extensión .bak desde sucursal hacia QNAP.");
