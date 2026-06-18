@@ -14,10 +14,10 @@ namespace QnapBackupper
         {
             string _sucursalesString = ConfigurationManager.AppSettings["SUCURSALES"];
             string[] _sucursalesArray = _sucursalesString.Split(',');
+            Logger log = LogManager.GetCurrentClassLogger();
 
-            if (_sucursalesArray.Length > 0 && _sucursalesArray[0].Length > 0) 
+            if (_sucursalesArray.Length > 0 && _sucursalesArray[0].Length > 0)
             {
-                Logger log = LogManager.GetCurrentClassLogger();
                 log.Info("Se iniciar proceso de copiado de archivos de respaldo con extensión .bak desde sucursal hacia QNAP.");
                 log.Info($"Se encuentran {_sucursalesArray.Length} sucursales listadas para respaldar en el archivo App.config.");
                 int i = 1;
@@ -38,7 +38,7 @@ namespace QnapBackupper
                         log.Info($"Generando conexión con terminal de caja rex{_sucursal}a.");
                         try
                         {
-                            using (new NetworkConnection(_buConn.networkConnection, 
+                            using (new NetworkConnection(_buConn.networkConnection,
                                 new NetworkCredential(_buConn.networkCredential, laps, _buConn.networkDomain)))
                             {
                                 ManageFile.CopyNewFromBranchToQnap(_buConn, log);
@@ -52,6 +52,12 @@ namespace QnapBackupper
                     }
                 }
                 log.Info("Proceso finalizado");
+                log.Info("---------------------------------------------------------------------------------------------------------");
+            }
+            else 
+            {
+                log.Info("No se encuentran sucursales consignadas en la variable SUCURSALES de QnapBackupper.exe.config.");
+                log.Info("Proceso finalizado.");
                 log.Info("---------------------------------------------------------------------------------------------------------");
             }
         }
