@@ -1,0 +1,23 @@
+﻿
+	QnapBackupper.
+
+	Documentación.
+
+		1. PROPOSITO:	la aplicación QnapBackupper genera respaldos de los archivos .bak (diferenciales, full y log) de una sucursal y los guarda en QNAP. Está pensado para
+						las sucursales nuevas que no tienen aún una terminal B donde resguardar sus archivos .bak.
+
+		2. PROCEDIMIENTO:	la aplicación decide qué sucursales debe respaldar revisando el parámetro "SUCURSALES" de su archivo App.config. Conecta con la sucursal por LAPS
+							y, si encuentra archivos con extensión .bak en la carpeta C:\Backups, copia los mismos en una carpeta "TEMP_SUC" de QNAP. Sólo copia archivos
+							que no fueron copiados previamente. Una vez finalizada la copia, se revisa si existen archivos en la carpeta "TEMP_SUC" que ya no existan en la 
+							sucursal y, si se encuentran, se los elimina.
+
+		3. INSTALACION:		copiar la última versión en INTEGRACIONES por escritorio remoto em la carpeta E:\Applications\QnapBackupper.
+
+		4. EJECUCION:		A) Se debe activar el job de INTEGRACIONES "QnapBachupper".
+		
+							B) Se debe consignar dentro del archivo QnapBackupper.exe.config cuáles serán las sucursales a respaldar. Para eso, modificar el valor de la variable
+							"SUCURSALES" separando los números de sucursal con una coma. Por ejemplo:
+								
+								<add key="SUCURSALES" value="05,10" /> 
+
+							
